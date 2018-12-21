@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Finding Nemo</title>
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+
+<link rel="stylesheet" href="css/style.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+
+</head>
+
+<body
+	style="background-image: url('images/bg03.jpg'); height =100%; background-position: center; background-size: cover;">
+
+
+	<script src="js/main.js"></script>
+	<div class="form-style-5">
+		<form name="TT" th:action="@{/signup}" th:object="${userdata}"
+			method="POST" class="validate-form">
+			<fieldset>
+				<legend>
+					<span class="number"></span> Sign Up
+				</legend>
+				
+				<label Style="color: #808080;" >User ID *</label> 
+				<div class="validate-input" data-validate="Enter User ID">
+					<input class="input100" type="text" name="field1" 
+						 th:field="*{userId}" onfocus="clearField(this);"/>
+				</div>
+
+
+				 <label Style="color: #808080;" >User Name *</label> 
+				<div class="validate-input" data-validate="Enter User Name">
+					<input class="input100" type="text" name="field2"
+						 th:field="*{userName}" onkeypress=" return onlyChar(event)">
+				</div>	
+				
+				 <label Style="color: #808080;" >Phone Number *</label> 
+				<div class="validate-input" data-validate="Enter Phone Number">
+					<input class="input100" type="text" name="field3"
+						 th:field="*{phoneNumber}" onkeypress=" return blockChar(event)" onfocus="clearField(this);">
+				</div>
+				 <label Style="color: #808080;" >Password *</label> 
+				<div class="validate-input" data-validate="Enter Password">
+					<input class="input100" type="text" name="field4"
+						 th:field="*{password}"  onfocus="clearField(this);">
+				</div>
+				 
+				<label for="job" Style="color: #808080;">Gender</label> <select id="job" name="field5">
+
+					<option value="m">Male</option>
+					<option value="f">Female</option>
+				</select> </br> </br></br>
+			</fieldset>
+			<input type="Submit" value="Sign Up" />
+			<div  align="center" th:text="${signupresult}"
+				Style="color: #0F0;"></div>
+			
+			<div  align="center" th:text="${exception}"
+				Style="color: #AA0114;"></div>
+			
+		<a th:href="@{/login}" Style="color:#421C52;"  > <-- Back </a>
+				
+
+
+
+		</form>
+
+
+	</div>
+	<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="js/main.js"></script>
+	<!--===============================================================================================-->
+
+</body>
+
+</html>
