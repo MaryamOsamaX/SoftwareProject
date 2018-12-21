@@ -46,7 +46,40 @@ public class UserController {
 		return "index";
 
 	}
+	@RequestMapping(method = RequestMethod.GET, value = "/signup")
+	public String signupView(Model model)
 
+	{
+		User userData = new User();
+		model.addAttribute("userdata", userData);
+
+		return "signup";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/signup")
+	public void validateSignUp(Model model, @ModelAttribute("userdata") User userData)
+
+	{
+		Optional<User> test;
+
+		test = userRepo.findById(userData.getUserId());
+		if (test.isPresent()) {
+
+			model.addAttribute("exception", "This user id is already exist ");
+
+		} else {
+              userRepo.save(userData);
+              model.addAttribute("signupresult", "Added Successfully!");
+              
+		}
+	}
+	@RequestMapping(method = RequestMethod.GET, value = "/home")
+	public String homeView()
+
+	{
+		
+		return "home";
+	}
 
 	
 
