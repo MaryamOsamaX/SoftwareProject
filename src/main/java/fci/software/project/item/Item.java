@@ -3,10 +3,21 @@ package fci.software.project.item;
 import javax.persistence.*;
 @Entity
 public class Item {
+	
 	private String itemName , type ,color ,userId , itemId;
+	@Lob
+	private byte[] image;
 
 	public String getItemName() {
 		return itemName;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 	public void setItemName(String itemName) {
