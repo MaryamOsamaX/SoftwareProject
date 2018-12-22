@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Finding Nemo</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link
+	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
+	rel="stylesheet" />
+<link href="css/default.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+
+</head>
+<body>
+	<div id="header" class="container">
+		<div id="logo">
+			<h1>
+				<a href="#">FINDING NEMO</a>
+			</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a th:href="@{/home}" accesskey="1" title="">Home</a></li>
+				<li class="active"><a th:href="@{/upload}" accesskey="3"
+					title="">Upload</a></li>
+				<li><a th:href="@{/search}" accesskey="3" title="">Search</a></li>
+				<li><a th:href="@{/login}">LogOut</a></li>
+
+			</ul>
+		</div>
+	</div>
+	<div id="page">
+		<div class="container">
+			<div class="title">
+				<h2>Answer Question</h2>
+			</div>
+
+			<form method="post" action="/select" 
+				th:object="${selectData}"  >
+		
+				<div for="job2" Style="color: #808080;" th:text="${f}"> </div> 
+				&nbsp; &nbsp;
+				
+				<select id="job3" th:field="*{result}" >
+					<option th:value="${x}" th:text="${x}"></option>
+					<option th:value="${y}" th:text="${y}"></option>
+					<option th:value="${z}" th:text="${z}"></option>
+					<option th:value="${w}" th:text="${w}"></option>
+			        <option th:value="${u}" th:text="${u}"></option>
+				</select>
+				<input type="submit" value="Done"/>
+
+
+			</form>
+
+			<div align="center" th:text="${correctmessage}"
+				Style="color: #0D540D;"></div>
+
+			<div align="center" th:text="${failmessage}" Style="color: #AA0114;"></div>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div id="copyright" class="container">
+		<p>Copyright (c) 2019 PowerPuff Girls :") | Thank you for visiting
+			us.</p>
+	</div>
+</body>
+</html>
