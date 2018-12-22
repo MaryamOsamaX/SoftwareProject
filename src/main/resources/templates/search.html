@@ -68,11 +68,14 @@
 				</select>
 				<input type="submit" value="Search" />
 			</form>
-			<div  th:each="photo : ${photoData}">
-				<div class="box"></div>
-				<img src="${photo}">
-					<div class="details"></div>
-				 <a th:href="@{/login}" class="button">Select</a>
+			<div  th:each="item : ${showData}">
+				<div class="box">
+				<div th:text="${item.itemId}"></div>
+				<div class="details" th:text="${item.itemName}">
+				</div>
+				If It's Yours Press Select <br/>
+				 <a th:href="@{/select?id=__${item.itemId}__}" class="button">Select</a>
+				 </div>
 		</div>
 		</div>
 
