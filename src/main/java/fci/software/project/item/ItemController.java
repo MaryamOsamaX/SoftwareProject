@@ -5,8 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
+
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.ImageIcon;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import fci.software.project.classes.SelectModel;
 import fci.software.project.classes.UploadData;
 import fci.software.project.question.*;
 import fci.software.project.user.UserController;
@@ -22,7 +29,7 @@ import fci.software.project.user.UserController;
 @Controller
 public class ItemController {
 	static int counter = 1;
-	
+	String SaveCorrect="";
 	@Autowired
 	private ItemRepo itemRepo;
 	@Autowired
@@ -109,10 +116,11 @@ public class ItemController {
 		EntityManager em=getEntityManager();
 		javax.persistence.Query q = em.createNativeQuery(query, Item.class);
 		List<Item> a = q.getResultList();
-		ImageIcon filearray[]=new ImageIcon [a.size()];
-        
-		byte []photo=a.get(0).getImage();
-		File file=new File("");
+		
+		  model.addAttribute("showData", a);
+		//ImageIcon filearray[]=new ImageIcon [a.size()];
+		//byte []photo=a.get(0).getImage();
+		/*File file=new File("");
 		String path=file.getAbsolutePath();
 		//System.out.println(path);
 		FileOutputStream outputStream = new FileOutputStream(path+"\\src\\main\\resources\\uploadedphotos\\photo"+photocnt+".jpg");
@@ -123,8 +131,12 @@ public class ItemController {
 	    //temp.getImage();
 	    model.addAttribute("photoData", filearray);
 	    outputStream.close();
-	    photocnt++;
+	    photocnt++;*/
            
 		return "search";
 	}
+	
+		
+
+
 }
