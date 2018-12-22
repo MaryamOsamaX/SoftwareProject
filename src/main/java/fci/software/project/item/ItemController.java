@@ -92,4 +92,39 @@ public class ItemController {
 		return "upload";
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/search")
+	public String searchView(Model model)
+	{
+		Item searchData = new Item();
+		model.addAttribute("searchData", searchData);
+		return "search";
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/search")
+	public String search(Model model ,@ModelAttribute("searchData") Item searchData ) throws Exception
+	{   int photocnt=0;
+		String query="SELECT * FROM Item i WHERE";
+		query+=(" type=\'"+ searchData.getType()+ "\'");
+		query+= (" AND color = \'" + searchData.getColor() + "\' ; ");
+		EntityManager em=getEntityManager();
+		javax.persistence.Query q = em.createNativeQuery(query, Item.class);
+		List<Item> a = q.getResultList();
+		ImageIcon filearray[]=new ImageIcon [a.size()];
+        
+		byte []photo=a.get(0).getImage();
+		File file=new File("");
+		String path=file.getAbsolutePath();
+		//System.out.println(path);
+		FileOutputStream outputStream = new FileOutputStream(path+"\\src\\main\\resources\\uploadedphotos\\photo"+photocnt+".jpg");
+		outputStream.write(photo);
+	    ImageIcon temp=new ImageIcon(path+"\\src\\main\\resources\\uploadedphotos\\photo"+photocnt+".jpg");
+	    filearray[0]=temp;
+	    filearray[1]=temp;
+	    //temp.getImage();
+	    model.addAttribute("photoData", filearray);
+	    outputStream.close();
+	    photocnt++;
+           
+		return "search";
+	}
 }
