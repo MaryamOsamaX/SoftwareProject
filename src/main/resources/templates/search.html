@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Finding Nemo</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link
+	href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900"
+	rel="stylesheet" />
+<link href="css/default.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+</head>
+<body>
+	<div id="header" class="container">
+		<div id="logo">
+			<h1>
+				<a href="#">FINDING NEMO</a>
+			</h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a th:href="@{/home}" accesskey="1" title="">Home</a></li>
+				<li><a th:href="@{/upload}" accesskey="3" title="">Upload</a></li>
+				<li class="active"><a th:href="@{/search}" accesskey="3"
+					title="">Search</a></li>
+				<li><a th:href="@{/login}">LogOut</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="page">
+		<div class="container">
+			<div class="title">
+				<h2>Search ITEM</h2>
+
+			</div>
+
+			<form method="post" action="/search" th:object="${searchData}">
+				<label for="job2" Style="color: #808080;">Type</label> &nbsp; &nbsp;
+				<select id="job2" th:field="*{type}">
+					<option value="wallet">Wallet</option>
+					<option value="accessories">Accessories</option>
+					<option value="bag">Bag</option>
+					<option value="electronics">Electronics</option>
+					<option value="clothes">Clothes</option>
+					<option value="others">Others</option>
+				</select> &nbsp; &nbsp;&nbsp; &nbsp;
+				<label for="job3" Style="color: #808080;">Color</label> &nbsp;
+				&nbsp;
+				<select id="job3" th:field="*{color}">
+					<option value="black">Black</option>
+					<option value="white">White</option>
+					<option value="brown">Brown</option>
+					<option value="gray">Gray</option>
+					<option value="pink">Pink</option>
+					<option value="red">Red</option>
+					<option value="orange">Orange</option>
+					<option value="yellow">Yellow</option>
+					<option value="green">Green</option>
+					<option value="blue">Blue</option>
+					<option value="purple">Purple</option>
+					<option value="others">Others</option>
+				</select>
+				<input type="submit" value="Search" />
+			</form>
+			<div  th:each="photo : ${photoData}">
+				<div class="box"></div>
+				<img src="${photo}">
+					<div class="details"></div>
+				 <a th:href="@{/login}" class="button">Select</a>
+		</div>
+		</div>
+
+
+
+	</div>
+
+	<div id="copyright" class="container">
+		<p>Copyright (c) 2019 PowerPuff Girls :") | Thank you for visiting
+			us.</p>
+	</div>
+</body>
+</html>
