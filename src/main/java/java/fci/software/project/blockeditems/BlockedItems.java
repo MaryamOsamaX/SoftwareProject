@@ -1,13 +1,6 @@
-package fci.software.project.classes;
-
-import java.io.Serializable;
-
+package fci.software.project.blockeditems;
 import javax.persistence.*;
-@Embeddable
-class Key implements Serializable
-{
-	public String userId , itemId;
-}
+
 @Entity
 public class BlockedItems {
 	@EmbeddedId
