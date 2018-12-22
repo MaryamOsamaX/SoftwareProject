@@ -16,7 +16,7 @@ import fci.software.project.classes.LoginData;
 public class UserController {
 	@Autowired
 	private UserRepo userRepo;
-
+    public static String saveUserId;
 	@RequestMapping(method = RequestMethod.GET, value = "/login")
 	public String loginView(Model model) {
 		LoginData loginData = new LoginData();
@@ -36,6 +36,7 @@ public class UserController {
 				model.addAttribute("logindata", logindata);
 				return "index";
 			} else
+				saveUserId=logindata.getuId();
 				return "redirect:/home";
 		} else {
 			logindata.setResult("This user not exist");
@@ -46,6 +47,7 @@ public class UserController {
 		return "index";
 
 	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/signup")
 	public String signupView(Model model)
 
@@ -80,7 +82,6 @@ public class UserController {
 		
 		return "home";
 	}
-
 	
 
 
