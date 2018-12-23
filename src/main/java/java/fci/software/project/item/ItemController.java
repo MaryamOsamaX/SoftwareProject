@@ -138,6 +138,7 @@ public class ItemController {
 		List<BlockedItems> b = q.getResultList();
 		/****************** filter data ***************************/
 		List<Item> filterA = new ArrayList<Item>();
+
 		List<Send> filter = new ArrayList<Send>();
 
 		int flag;
@@ -151,19 +152,24 @@ public class ItemController {
 				}
 			}
 			if (flag == 0) {
+
 				c.item = a.get(l);
 				byte[] photo = a.get(l).getImage();
+
 				File file = new File("");
 				String path = file.getAbsolutePath();
 				FileOutputStream outputStream = new FileOutputStream(
 						path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
 				outputStream.write(photo);
+
 				c.path = (path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+
 				outputStream.close();
 				photocnt++;
 				filter.add(c);
 			}
 		}
+
 		// model.addAttribute("showData", filterA);
 		// ImageIcon filearray[]=new ImageIcon [a.size()];
 		// List<String> paths = new ArrayList<String>();
@@ -233,6 +239,7 @@ public class ItemController {
 
 		return "select";
 	}
+
 
 	@RequestMapping(method = RequestMethod.GET, value = "/posts")
 	public String postsView(Model model) throws Exception {
@@ -313,7 +320,6 @@ public class ItemController {
 			randomizedArray[i] = randomizedArray[randPos];
 			randomizedArray[randPos] = tmp;
 		}
-
 		return randomizedArray;
 	}
 
