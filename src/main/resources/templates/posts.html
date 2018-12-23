@@ -27,9 +27,9 @@
 			<ul>
 				<li><a th:href="@{/home}" accesskey="1" title="">Home</a></li>
 				<li><a th:href="@{/upload}" accesskey="3" title="">Upload</a></li>
-				<li class="active"><a th:href="@{/search}" accesskey="3"
+				<li ><a th:href="@{/search}" accesskey="3"
 					title="">Search</a></li>
-				<li><a th:href="@{/posts}" accesskey="3" title="">My Posts</a></li>
+				<li class="active"><a th:href="@{/posts}" accesskey="3" title="">My Posts</a></li>
 				<li><a th:href="@{/login}">LogOut</a></li>
 			</ul>
 		</div>
@@ -37,40 +37,11 @@
 	<div id="page">
 		<div class="container">
 			<div class="title">
-				<h2>Search ITEM</h2>
+				<h2>My Posts</h2>
 
 			</div>
 
-			<form method="post" action="/search" th:object="${searchData}">
-				<label for="job2" Style="color: #808080;">Type</label> &nbsp; &nbsp;
-				<select id="job2" th:field="*{type}">
-					<option value="wallet">Wallet</option>
-					<option value="accessories">Accessories</option>
-					<option value="bag">Bag</option>
-					<option value="electronics">Electronics</option>
-					<option value="clothes">Clothes</option>
-					<option value="others">Others</option>
-				</select> &nbsp; &nbsp;&nbsp; &nbsp;
-				<label for="job3" Style="color: #808080;">Color</label> &nbsp;
-				&nbsp;
-				<select id="job3" th:field="*{color}">
-					<option value="black">Black</option>
-					<option value="white">White</option>
-					<option value="brown">Brown</option>
-					<option value="gray">Gray</option>
-					<option value="pink">Pink</option>
-					<option value="red">Red</option>
-					<option value="orange">Orange</option>
-					<option value="yellow">Yellow</option>
-					<option value="green">Green</option>
-					<option value="blue">Blue</option>
-					<option value="purple">Purple</option>
-					<option value="others">Others</option>
-				</select>
-				<input type="submit" value="Search" />
-				
-			</form>
-			
+					
 			<div  th:each="photo : ${photoData}">
 				<div class="box">
 				<img th:src="@{photo}" >
@@ -78,14 +49,15 @@
 				<div class="details" th:text="${photo.item.itemName}"> 
 				
 				</div>
-				If It's Yours Press Select <br/>
-				 <a th:href="@{/select?id=__${photo.item.itemId}__}" class="button">Select</a> 
+				
+				 <a th:href="@{/delete?id=__${photo.item.itemId}__}" class="button">Delete</a> 
 				 </div>
 		</div>
 		</div>
 
 
-
+<div align="center" th:text="${message}"
+				Style="color: #0D540D;"></div>
 	
 
 	<div id="copyright" class="container">

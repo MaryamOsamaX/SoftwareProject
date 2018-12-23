@@ -2,6 +2,7 @@ package fci.software.project.item;
 
 import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -25,6 +26,7 @@ import fci.software.project.classes.SelectModel;
 import fci.software.project.classes.Send;
 import fci.software.project.classes.UploadData;
 import fci.software.project.question.*;
+import fci.software.project.user.User;
 import fci.software.project.user.UserController;
 import fci.software.project.user.UserRepo;
 import fci.software.project.blockeditems.*;
@@ -136,11 +138,12 @@ public class ItemController {
 		List<BlockedItems> b = q.getResultList();
 		/****************** filter data ***************************/
 		List<Item> filterA = new ArrayList<Item>();
-		List<Send> filter=new ArrayList<Send>();
-		
+
+		List<Send> filter = new ArrayList<Send>();
+
 		int flag;
 		for (int l = 0; l < a.size(); l++) {
-			Send c=new Send();
+			Send c = new Send();
 			flag = 0;
 			for (int j = 0; j < b.size(); j++) {
 				if (a.get(l).getItemId().equals(b.get(j).getItemKey().itemId)) {
@@ -149,34 +152,41 @@ public class ItemController {
 				}
 			}
 			if (flag == 0) {
-				c.item=a.get(l);
-				byte[] photo =a.get(l).getImage();
+
+				c.item = a.get(l);
+				byte[] photo = a.get(l).getImage();
+
 				File file = new File("");
 				String path = file.getAbsolutePath();
 				FileOutputStream outputStream = new FileOutputStream(
 						path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
 				outputStream.write(photo);
-				c.path=(path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+
+				c.path = (path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+
 				outputStream.close();
 				photocnt++;
 				filter.add(c);
 			}
 		}
-	//	model.addAttribute("showData", filterA);
+
+		// model.addAttribute("showData", filterA);
 		// ImageIcon filearray[]=new ImageIcon [a.size()];
-		//List<String> paths = new ArrayList<String>();
-	//	byte[] photo = filterA.get(0).getImage();
-	/*	File file = new File("");
-		String path = file.getAbsolutePath();*/
+		// List<String> paths = new ArrayList<String>();
+		// byte[] photo = filterA.get(0).getImage();
+		/*
+		 * File file = new File(""); String path = file.getAbsolutePath();
+		 */
 		// System.out.println(path);
-/*		FileOutputStream outputStream = new FileOutputStream(
-				path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
-		outputStream.write(photo);
-		paths.add(path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
-*/		// temp.getImage();
+		/*
+		 * FileOutputStream outputStream = new FileOutputStream( path +
+		 * "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+		 * outputStream.write(photo); paths.add(path +
+		 * "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+		 */ // temp.getImage();
 		model.addAttribute("photoData", filter);
-		//outputStream.close();
-		//photocnt++;
+		// outputStream.close();
+		// photocnt++;
 
 		return "search";
 	}
@@ -230,6 +240,75 @@ public class ItemController {
 		return "select";
 	}
 
+
+	@RequestMapping(method = RequestMethod.GET, value = "/posts")
+	public String postsView(Model model) throws Exception {
+		int photocnt = 0;
+		UserController x = new UserController();
+
+		String query = "SELECT * FROM Item i WHERE user_id=\'" + x.saveUserId + "\' ;";
+		EntityManager em = getEntityManager();
+		javax.persistence.Query q = em.createNativeQuery(query, Item.class);
+		List<Item> a = q.getResultList();
+		List<Send> arr = new ArrayList<Send>();
+		for (int l = 0; l < a.size(); l++) {
+			Send c = new Send();
+
+			c.item = a.get(l);
+			byte[] photo = a.get(l).getImage();
+			File file = new File("");
+			String path = file.getAbsolutePath();
+			FileOutputStream outputStream = new FileOutputStream(
+					path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+			outputStream.write(photo);
+			c.path = (path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+			outputStream.close();
+			photocnt++;
+			arr.add(c);
+
+		}
+		model.addAttribute("photoData", arr);
+
+		return "posts";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/delete")
+	public String delete(Model model, HttpServletRequest request) throws Exception {
+		/********************* delete **********************/
+
+		String itemId = request.getParameter("id");
+		itemRepo.deleteById(itemId);
+		model.addAttribute("message", "item deleted successfully!");
+		/******************* posts again **********************/
+		int photocnt = 0;
+		UserController x = new UserController();
+
+		String query = "SELECT * FROM Item i WHERE user_id=\'" + x.saveUserId + "\' ;";
+		EntityManager em = getEntityManager();
+		javax.persistence.Query q = em.createNativeQuery(query, Item.class);
+		List<Item> a = q.getResultList();
+		List<Send> arr = new ArrayList<Send>();
+		for (int l = 0; l < a.size(); l++) {
+			Send c = new Send();
+
+			c.item = a.get(l);
+			byte[] photo = a.get(l).getImage();
+			File file = new File("");
+			String path = file.getAbsolutePath();
+			FileOutputStream outputStream = new FileOutputStream(
+					path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+			outputStream.write(photo);
+			c.path = (path + "\\src\\main\\resources\\uploadedphotos\\photo" + photocnt + ".jpg");
+			outputStream.close();
+			photocnt++;
+			arr.add(c);
+
+		}
+		model.addAttribute("photoData", arr);
+
+		return "posts";
+	}
+
 	public String[] Randomize(String[] arr) {
 		String[] randomizedArray = new String[arr.length];
 		System.arraycopy(arr, 0, randomizedArray, 0, arr.length);
@@ -241,7 +320,6 @@ public class ItemController {
 			randomizedArray[i] = randomizedArray[randPos];
 			randomizedArray[randPos] = tmp;
 		}
-
 		return randomizedArray;
 	}
 
